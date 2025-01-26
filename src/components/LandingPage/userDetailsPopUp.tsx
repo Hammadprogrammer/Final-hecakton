@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router'; // Correct hook for Next.js navigation
 
 interface UserDetailsPopupProps {
     onClose: () => void;
@@ -12,15 +12,17 @@ const UserDetailsPopup: React.FC<UserDetailsPopupProps> = ({ onClose }) => {
     const [email, setEmail] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false); // To handle loading state
+    const [error, setError] = useState<string>(''); // To handle error messages
     const router = useRouter(); // React Router hook for navigation
 
     const handleSave = async () => {
         if (!cnic || !email || !name) {
-            alert('Please fill all fields.');
+            setError('Please fill all fields.');
             return;
         }
 
         setLoading(true);
+        setError(''); // Clear previous errors
 
         try {
             const response = await fetch('http://localhost:8000/api/v1/signup', {
@@ -35,14 +37,17 @@ const UserDetailsPopup: React.FC<UserDetailsPopupProps> = ({ onClose }) => {
 
             if (response.ok) {
                 alert('User registered successfully!');
+                setCnic('');
+                setEmail('');
+                setName('');
                 onClose();
                 router.push('/login');
             } else {
-                alert(result.message || 'Registration failed.');
+                setError(result.message || 'Registration failed.');
             }
         } catch (error) {
             console.error('Error during registration:', error);
-            alert('An error occurred. Please try again.');
+            setError('An error occurred. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -52,6 +57,7 @@ const UserDetailsPopup: React.FC<UserDetailsPopupProps> = ({ onClose }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="bg-white p-6 rounded-lg shadow-lg w-96">
                 <h2 className="text-xl font-bold text-center mb-4">Enter Your Details</h2>
+                {error && <p className="text-red-600 mb-4">{error}</p>} {/* Display error message */}
                 <div className="mb-4">
                     <label className="block mb-2 text-sm font-semibold text-gray-700">CNIC</label>
                     <Input

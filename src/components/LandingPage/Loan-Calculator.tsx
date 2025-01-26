@@ -36,6 +36,11 @@ const LoanCalculator: React.FC = () => {
         const loanAmountValue = parseFloat(loanAmount);
         const loanPeriodValue = parseInt(loanPeriod, 10);
 
+        if (isNaN(loanAmountValue)) {
+            alert('Please enter a valid loan amount.');
+            return;
+        }
+
         if (loanAmountValue > maxLoanAmounts[category]) {
             alert(`Maximum loan amount for ${category} is PKR ${maxLoanAmounts[category]}.`);
             return;
@@ -82,7 +87,7 @@ const LoanCalculator: React.FC = () => {
                                     <SelectValue placeholder="Choose a subcategory" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {subCategories[category].map((subCat, index) => (
+                                    {subCategories[category]?.map((subCat, index) => (
                                         <SelectItem key={index} value={subCat}>
                                             {subCat}
                                         </SelectItem>

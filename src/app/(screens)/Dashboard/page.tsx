@@ -11,19 +11,23 @@ export default function Dashboard() {
     useEffect(() => {
         const token = localStorage.getItem("accessToken");
         if (!token) {
-            router.push("/login")
+            router.replace("/login"); // ✅ Use replace instead of push
         } else {
-            setUser({ fullname: "Not Found" })
+            // Fetch user details (assumes user data is stored in localStorage)
+            const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+            setUser(storedUser?.fullname ? storedUser : { fullname: "User" });
         }
-    }, [router])
+    }, [router]);
 
     const handleLogout = () => {
-        localStorage.removeItem("accessToken")
-        router.push("/login")
-    }
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("user"); // Clear stored user info
+        setUser(null);
+        router.replace("/login");
+    };
 
     if (!user) {
-        return <div>Loading...</div>
+        return <div>Loading...</div>;
     }
 
     return (
@@ -37,6 +41,5 @@ export default function Dashboard() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
-

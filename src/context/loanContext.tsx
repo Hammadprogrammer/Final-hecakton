@@ -37,7 +37,8 @@ export const LoanCalculatorProvider: React.FC<LoanCalculatorProviderProps> = ({ 
 // Custom Hook to use the Context
 export const useLoanCalculator = (): LoanCalculatorContextType => {
     const context = useContext(LoanCalculatorContext);
-    console.log(context);
+    
+    // Check if context is undefined
     if (!context) {
         throw new Error('useLoanCalculator must be used within a LoanCalculatorProvider');
     }

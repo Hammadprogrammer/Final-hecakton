@@ -32,10 +32,11 @@ export default function SignUp() {
             await signUp(formData)
             toast({
                 title: "Account created.",
-                description: "We've created your account for you.",
+                description: "We&apos;ve created your account for you.",
             })
             router.push("/login")
         } catch (error) {
+            console.error("Signup error:", error); // ✅ Logs the error
             toast({
                 title: "Error",
                 description: "There was a problem creating your account.",
@@ -96,4 +97,3 @@ export default function SignUp() {
         </Layout>
     )
 }
-

@@ -30,7 +30,6 @@ export default function Login() {
             const data = await response.json();
 
             if (response.ok) {
-                // Save token to localStorage or cookies
                 localStorage.setItem("accessToken", data.accessToken);
 
                 toast({
@@ -38,7 +37,6 @@ export default function Login() {
                     description: "Welcome back!",
                 });
 
-                // Navigate to home page
                 router.push("/");
             } else {
                 toast({
@@ -48,6 +46,7 @@ export default function Login() {
                 });
             }
         } catch (error) {
+            console.error("Login error:", error); // ✅ Logs the error
             toast({
                 title: "Error",
                 description: "Something went wrong. Please try again later.",
@@ -89,7 +88,7 @@ export default function Login() {
             </form>
             <div className="mt-6">
                 <Link href="/signup" className="text-sm text-blue-600 hover:text-blue-500">
-                    Don't have an account? Sign up
+                    Don&apos;t have an account? Sign up
                 </Link>
             </div>
         </Layout>

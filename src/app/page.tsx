@@ -3,11 +3,8 @@
 import React from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { ArrowRight, PiggyBank, Building, Store, BookOpen } from "lucide-react"
 import LoanCalculator from "@/components/LandingPage/Loan-Calculator"
-import { LoanCalculatorProvider } from "@/context/loanContext"
 
 export default function LandingPage() {
   return (
@@ -32,7 +29,7 @@ export default function LandingPage() {
       <section className="py-20 px-6 bg-gray-100">
         <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">Our Loan Categories</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 max-w-7xl mx-auto">
-          {[
+          {[ 
             {
               title: "Wedding Loans",
               desc: "Valima, Furniture, and Jahez expenses covered.",
